@@ -38,7 +38,7 @@ void StreamServerComponent::setup() {
 void StreamServerComponent::checkPublish () {
 
     // Check if it's time to publish the sensor value
-    uint32_t now = millis();
+    uint32_t now = ::millis();
     if (now - last_publish_time_ >= publish_interval_ms_) {
       // Publish the current count
       publish_sensor();
