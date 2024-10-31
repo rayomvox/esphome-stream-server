@@ -17,6 +17,7 @@ void StreamServerComponent::setup() {
 
     // The make_unique() wrapper doesn't like arrays, so initialize the unique_ptr directly.
     this->buf_ = std::unique_ptr<uint8_t[]>{new uint8_t[this->buf_size_]};
+    publish_interval_ms_ = 10000 ;   // Interval at which to publish, in milliseconds
 
     struct sockaddr_storage bind_addr;
 #if ESPHOME_VERSION_CODE >= VERSION_CODE(2023, 4, 0)
@@ -29,15 +30,35 @@ void StreamServerComponent::setup() {
     this->socket_->setblocking(false);
     this->socket_->bind(reinterpret_cast<struct sockaddr *>(&bind_addr), bind_addrlen);
     this->socket_->listen(8);
-
     this->publish_sensor();
+
 }
+
+#ifdef USE_SENSOR
+void StreamServerComponent::checkPublish {
+
+    // Check if it's time to publish the sensor value
+    uint32_t now = millis();
+    if (now - last_publish_time_ >= publish_interval_ms_) {
+      // Publish the current count
+      publish_sensor();
+
+      // Update the last publish time to the current time
+      last_publish_time_ = now;
+    }
+  }
+
+}
+#endif
 
 void StreamServerComponent::loop() {
     this->accept();
     this->read();
     this->flush();
     this->write();
+#ifdef USE_SENSOR
+    this->checkPublish();
+#endif
     this->cleanup();
 }
 

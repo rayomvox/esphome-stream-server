@@ -67,10 +67,16 @@ protected:
     uint16_t port_;
     size_t buf_size_;
 
+    uint32_t publish_interval_ms_;   // Interval at which to publish, in milliseconds
+    uint32_t last_publish_time_;     // Last time the data was published
+
 #ifdef USE_BINARY_SENSOR
     esphome::binary_sensor::BinarySensor *connected_sensor_;
 #endif
 #ifdef USE_SENSOR
+    void checkPublish();
+
+
     esphome::sensor::Sensor *connection_count_sensor_;
     esphome::sensor::Sensor *uart_pkts_in_sensor_;
     esphome::sensor::Sensor *uart_pkts_out_sensor_;
