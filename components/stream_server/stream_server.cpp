@@ -47,8 +47,6 @@ void StreamServerComponent::checkPublish () {
       last_publish_time_ = now;
     }
   }
-
-}
 #endif
 
 void StreamServerComponent::loop() {
