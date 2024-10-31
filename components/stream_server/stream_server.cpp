@@ -49,6 +49,7 @@ void StreamServerComponent::dump_config() {
 #endif
 #ifdef USE_SENSOR
     LOG_SENSOR("  ", "Connection count:", this->connection_count_sensor_);
+    LOG_SENSOR("  ", "Connection count:", this->connection_count_sensor_);
 #endif
 }
 
@@ -65,6 +66,10 @@ void StreamServerComponent::publish_sensor() {
 #ifdef USE_SENSOR
     if (this->connection_count_sensor_)
         this->connection_count_sensor_->publish_state(this->clients_.size());
+
+    if (this->uart_pkts_in_sensor_)
+        this->uart_pkts_in_sensor_->publish_state(this->uart_pkts_in);
+
 #endif
 }
 
@@ -114,6 +119,10 @@ void StreamServerComponent::read() {
 
         // Fill all available contiguous space in the ring buffer.
         len = std::min<size_t>(available, std::min<size_t>(this->buf_ahead(this->buf_head_), free));
+
+        this->uart_pkts_in++; // count packets in
+        this->uart_bytes_in += len; //count bytes in
+
         this->stream_->read_array(&this->buf_[this->buf_index(this->buf_head_)], len);
         this->buf_head_ += len;
     }
@@ -157,7 +166,11 @@ void StreamServerComponent::write() {
             continue;
 
         while ((read = client.socket->read(&buf, sizeof(buf))) > 0)
+        {
             this->stream_->write_array(buf, read);
+            this->uart_pkts_out++; // count packets out
+            this->uart_bytes_out += read; //count bytes out
+        }
 
         if (read == 0 || errno == ECONNRESET || errno == ENOTCONN) {
             ESP_LOGD(TAG, "Client %s disconnected", client.identifier.c_str());

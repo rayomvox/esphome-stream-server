@@ -27,6 +27,8 @@ public:
 #endif
 #ifdef USE_SENSOR
     void set_connection_count_sensor(esphome::sensor::Sensor *connection_count) { this->connection_count_sensor_ = connection_count; }
+
+    void set_uart_pkts_in_sensor(esphome::sensor::Sensor *uart_pkts_in) { this->uart_pkts_in_sensor_ = uart_pkts_in; }
 #endif
 
     void setup() override;
@@ -69,6 +71,7 @@ protected:
 #endif
 #ifdef USE_SENSOR
     esphome::sensor::Sensor *connection_count_sensor_;
+    esphome::sensor::Sensor *uart_pkts_in_sensor_;
 #endif
 
     std::unique_ptr<uint8_t[]> buf_{};
@@ -77,4 +80,12 @@ protected:
 
     std::unique_ptr<esphome::socket::Socket> socket_{};
     std::vector<Client> clients_{};
+
+    uint16_t uart_pkts_in;
+    uint16_t uart_pkts_out;
+
+    uint16_t uart_bytes_in;
+    uint16_t uart_bytes_out;
+
+
 };
