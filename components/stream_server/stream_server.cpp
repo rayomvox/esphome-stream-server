@@ -70,6 +70,9 @@ void StreamServerComponent::publish_sensor() {
     if (this->uart_pkts_in_sensor_)
         this->uart_pkts_in_sensor_->publish_state(this->uart_pkts_in);
 
+    if (this->uart_pkts_out_sensor_)
+        this->uart_pkts_out_sensor_->publish_state(this->uart_pkts_out);
+
 #endif
 }
 
