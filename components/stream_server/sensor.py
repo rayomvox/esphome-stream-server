@@ -21,7 +21,7 @@ CONFIG_SCHEMA = cv.Schema(
             state_class=STATE_CLASS_MEASUREMENT,
             entity_category=ENTITY_CATEGORY_DIAGNOSTIC,
         ),
-        cv.Required(CONF_UART_PKTS_IN): sensor.sensor_schema(
+        cv.Optional(CONF_UART_PKTS_IN): sensor.sensor_schema(
             accuracy_decimals=0,
             state_class=STATE_CLASS_MEASUREMENT,
             entity_category=ENTITY_CATEGORY_DIAGNOSTIC,
