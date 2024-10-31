@@ -35,7 +35,7 @@ void StreamServerComponent::setup() {
 }
 
 #ifdef USE_SENSOR
-void StreamServerComponent::checkPublish {
+void StreamServerComponent::checkPublish () {
 
     // Check if it's time to publish the sensor value
     uint32_t now = millis();
