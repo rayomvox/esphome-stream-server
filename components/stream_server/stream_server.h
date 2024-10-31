@@ -29,6 +29,7 @@ public:
     void set_connection_count_sensor(esphome::sensor::Sensor *connection_count) { this->connection_count_sensor_ = connection_count; }
 
     void set_uart_pkts_in_sensor(esphome::sensor::Sensor *uart_pkts_in) { this->uart_pkts_in_sensor_ = uart_pkts_in; }
+    void set_uart_pkts_in_sensor(esphome::sensor::Sensor *uart_pkts_out) { this->uart_pkts_out_sensor_ = uart_pkts_out; }
 #endif
 
     void setup() override;

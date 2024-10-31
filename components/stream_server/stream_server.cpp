@@ -50,6 +50,7 @@ void StreamServerComponent::dump_config() {
 #ifdef USE_SENSOR
     LOG_SENSOR("  ", "Connection count:", this->connection_count_sensor_);
     LOG_SENSOR("  ", "UART Pkts in:", this->uart_pkts_in_sensor_);
+    LOG_SENSOR("  ", "UART Pkts out:", this->uart_pkts_out_sensor_);
 #endif
 }
 
