@@ -10,14 +10,23 @@ from . import ns, StreamServerComponent
 CONF_CONNECTION_COUNT = "connection_count"
 CONF_STREAM_SERVER = "stream_server"
 
+CONF_UART_PKTS_IN = "uart_pkts_int"
+
 CONFIG_SCHEMA = cv.Schema(
     {
         cv.GenerateID(CONF_STREAM_SERVER): cv.use_id(StreamServerComponent),
+
         cv.Required(CONF_CONNECTION_COUNT): sensor.sensor_schema(
             accuracy_decimals=0,
             state_class=STATE_CLASS_MEASUREMENT,
             entity_category=ENTITY_CATEGORY_DIAGNOSTIC,
         ),
+        cv.Required(CONF_UART_PKTS_IN): sensor.sensor_schema(
+            accuracy_decimals=0,
+            state_class=STATE_CLASS_MEASUREMENT,
+            entity_category=ENTITY_CATEGORY_DIAGNOSTIC,
+        ),
+
     }
 )
 
@@ -27,3 +36,6 @@ async def to_code(config):
 
     sens = await sensor.new_sensor(config[CONF_CONNECTION_COUNT])
     cg.add(server.set_connection_count_sensor(sens))
+
+    uin = await sensor.new_sensor(config[CONF_UART_PKTS_IN])
+    cg.add(server.set_uart_pkts_int_sensor(uin))
