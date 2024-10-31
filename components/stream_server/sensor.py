@@ -37,5 +37,5 @@ async def to_code(config):
     sens = await sensor.new_sensor(config[CONF_CONNECTION_COUNT])
     cg.add(server.set_connection_count_sensor(sens))
 
-    uin = await sensor.new_sensor(config[CONF_UART_PKTS_IN])
-    cg.add(server.set_uart_pkts_int_sensor(uin))
+    uart_pkts_in_sensor = await sensor.new_sensor(config[CONF_UART_PKTS_IN])
+    cg.add(server.set_uart_pkts_in_sensor(uart_pkts_in_sensor))
