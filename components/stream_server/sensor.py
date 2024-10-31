@@ -10,7 +10,7 @@ from . import ns, StreamServerComponent
 CONF_CONNECTION_COUNT = "connection_count"
 CONF_STREAM_SERVER = "stream_server"
 
-CONF_UART_PKTS_IN = "uart_pkts_int"
+CONF_UART_PKTS_IN = "uart_pkts_in"
 
 CONFIG_SCHEMA = cv.Schema(
     {
