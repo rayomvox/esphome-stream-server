@@ -73,6 +73,7 @@ protected:
 #ifdef USE_SENSOR
     esphome::sensor::Sensor *connection_count_sensor_;
     esphome::sensor::Sensor *uart_pkts_in_sensor_;
+    esphome::sensor::Sensor *uart_pkts_out_sensor_;
 #endif
 
     std::unique_ptr<uint8_t[]> buf_{};
